@@ -9,7 +9,7 @@
 
     - name: Add Jenkins repository
       apt_repository:
-        repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+        repo: 'deb https://pkg.jenkins.io/debian binary/'
         state: present
 
     - name: Update apt cache
