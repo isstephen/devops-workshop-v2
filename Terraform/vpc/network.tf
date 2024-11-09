@@ -80,10 +80,10 @@ resource "aws_security_group" "ec2_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+  
 # Allow inbound traffic on ports 8081 to 9000
 ingress {
-  from_port   = 8081
+  from_port   = 8000
   to_port     = 9000
   protocol    = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
@@ -99,3 +99,15 @@ ingress {
     Name = "ec2-sg"
   }
 }
+
+  module "sgs" {
+    source = "../sg_eks"
+    vpc_id     =     aws_vpc.dpp-vpc.id
+ }
+
+  module "eks" {
+       source = "../eks"
+       vpc_id     =     aws_vpc.main.id
+       subnet_ids =     aws_subnet.public.id
+       sg_ids = module.sgs.security_group_public
+ }
